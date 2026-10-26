@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stan-Vincent's Space</title>
+    <title>Stan-Vincent 的主页</title>
+    <meta name="description" content="Stan-Vincent 的个人主页 — C++/Qt 开发者，专注桌面应用与分布式系统。">
     <style>
-        /* 基础重置 */
+        /* ============ 基础重置 ============ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* 动态极光背景 */
+        html { scroll-behavior: smooth; }
+
+        /* ============ 动态极光背景 ============ */
         body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0b8793);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         @keyframes gradientBG {
@@ -32,29 +31,122 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 毛玻璃卡片主体 */
-        .glass-card {
+        /* ============ 通用 ============ */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 24px 60px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #00c6ff, #0072ff, #00c6ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        .section-subtitle {
+            color: #a0a0a0;
+            margin-bottom: 48px;
+            letter-spacing: 1px;
+        }
+
+        .glass {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 50px 40px;
-            text-align: center;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 90%;
-            width: 500px;
+        }
+
+        /* 滚动显现 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ 导航栏 ============ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 40px;
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-logo {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 28px; }
+
+        .nav-links a {
+            color: #cfcfcf;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #00c6ff; }
+
+        /* ============ Hero ============ */
+        .hero-card {
+            padding: 56px 48px;
+            text-align: center;
+            max-width: 92%;
+            width: 560px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .glass-card:hover {
+        .hero-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
         }
 
-        /* 炫酷渐变标题 */
+        .avatar {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            box-shadow: 0 0 24px rgba(0, 198, 255, 0.45);
+        }
+
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             margin-bottom: 10px;
             background: linear-gradient(to right, #00c6ff, #0072ff, #00c6ff);
             background-size: 200% auto;
@@ -69,13 +161,18 @@
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #a0a0a0;
-            margin-bottom: 30px;
+            margin-bottom: 12px;
             letter-spacing: 1px;
         }
 
-        /* 链接按钮组 */
+        .tagline {
+            font-size: 0.95rem;
+            color: #7ec8e3;
+            margin-bottom: 32px;
+        }
+
         .links {
             display: flex;
             justify-content: center;
@@ -92,7 +189,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
@@ -104,6 +201,8 @@
             box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
         }
 
+        .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
         /* 装饰性小圆点 */
         .decoration {
             position: absolute;
@@ -113,8 +212,9 @@
             border-radius: 50%;
             filter: blur(2px);
             top: 20%;
-            left: 20%;
+            left: 15%;
             animation: float 4s ease-in-out infinite;
+            pointer-events: none;
         }
 
         .decoration:nth-child(2) {
@@ -122,7 +222,7 @@
             height: 15px;
             background: #0072ff;
             top: 70%;
-            left: 80%;
+            left: 82%;
             animation-delay: 1s;
         }
 
@@ -130,27 +230,311 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 28px;
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        /* ============ 项目展示 ============ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+            gap: 32px;
+            justify-content: center;
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .project-card {
+            overflow: hidden;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 198, 255, 0.5);
+            box-shadow: 0 16px 48px rgba(0, 198, 255, 0.15);
+        }
+
+        .project-card::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+        }
+
+        .project-body { padding: 24px 26px 28px; }
+
+        .project-body h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #e8f6ff;
+        }
+
+        .project-body p {
+            font-size: 0.9rem;
+            color: #b5b5c5;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 198, 255, 0.12);
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            color: #7ec8e3;
+        }
+
+        .project-link {
+            font-size: 0.88rem;
+            color: #00c6ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .project-link:hover { text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+
+        /* ============ 技能栈 ============ */
+        .skills-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .skill-group { padding: 26px 32px; }
+
+        .skill-group h3 {
+            font-size: 1rem;
+            color: #7ec8e3;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .skill-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chip {
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.92rem;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .chip:hover {
+            background: rgba(0, 198, 255, 0.18);
+            border-color: #00c6ff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 198, 255, 0.25);
+        }
+
+        /* ============ 联系 / Footer ============ */
+        .contact-card {
+            padding: 48px 56px;
+            text-align: center;
+            max-width: 92%;
+            width: 520px;
+        }
+
+        .contact-card p {
+            color: #b5b5c5;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: #6d6d80;
+            font-size: 0.82rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* ============ 响应式 ============ */
+        @media (max-width: 600px) {
+            nav { padding: 14px 20px; }
+            .nav-links { gap: 16px; }
+            .nav-links a { font-size: 0.85rem; }
+            h1 { font-size: 2rem; }
+            .hero-card { padding: 40px 26px; }
+            .contact-card { padding: 36px 26px; }
+        }
     </style>
 </head>
 <body>
-    <!-- 装饰性的背景光点 -->
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-
-    <!-- 核心内容卡片 -->
-    <div class="glass-card">
-        <h1>Hello, World!</h1>
-        <p class="subtitle">欢迎来到 Stan-Vincent 的主页</p>
-        
-        <div class="links">
-            <!-- 记得把链接里的 # 换成你自己的真实地址 -->
-            <a href="https://github.com/stan-vincent" class="btn" target="_blank">
-                我的 GitHub
-            </a>
-            <a href="#" class="btn">
-                关于我 (敬请期待)
-            </a>
+    <!-- ============ 导航栏 ============ -->
+    <nav>
+        <a href="#home" class="nav-logo">Stan-Vincent</a>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#projects">项目</a>
+            <a href="#skills">技能</a>
+            <a href="#contact">联系</a>
         </div>
-    </div>
+    </nav>
+
+    <!-- ============ Hero ============ -->
+    <section id="home">
+        <div class="decoration"></div>
+        <div class="decoration"></div>
+
+        <div class="glass hero-card">
+            <div class="avatar">SV</div>
+            <h1>你好，我是 Stan-Vincent</h1>
+            <p class="subtitle">C++ / Qt 开发者</p>
+            <p class="tagline">专注桌面应用开发 与 分布式系统设计</p>
+
+            <div class="links">
+                <a href="https://github.com/Stan-Vincent" class="btn" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                    我的 GitHub
+                </a>
+                <a href="#projects" class="btn">查看项目</a>
+            </div>
+        </div>
+
+        <div class="scroll-hint">向下滚动 ↓</div>
+    </section>
+
+    <!-- ============ 项目展示 ============ -->
+    <section id="projects">
+        <h2 class="section-title reveal">项目展示</h2>
+        <p class="section-subtitle reveal">一些正在持续打磨的作品</p>
+
+        <div class="projects-grid">
+            <!-- 项目一：DeepSeek API Client -->
+            <div class="glass project-card reveal">
+                <div class="project-body">
+                    <h3>DeepSeek API Client (Qt)</h3>
+                    <p>基于 Qt 6 的 DeepSeek AI 桌面聊天客户端，集成 DeepSeek API 实现流式对话，支持 Markdown 渲染、多会话管理、主题切换与配置管理。模块化设计，界面与业务逻辑解耦。</p>
+                    <div class="tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">Qt 6</span>
+                        <span class="tag">DeepSeek API</span>
+                        <span class="tag">Markdown</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/Stan-Vincent/DeepSeek-API-Client-QT" target="_blank" rel="noopener">查看源码 →</a>
+                </div>
+            </div>
+
+            <!-- 项目二：HChat 分布式即时通讯 -->
+            <div class="glass project-card reveal">
+                <div class="project-body">
+                    <h3>HChat 分布式即时通讯系统</h3>
+                    <p>基于 Qt + C++ 的分布式 IM 系统（C/S 架构）：Qt6 客户端 + Boost.Beast HTTP 网关 + gRPC 分服协调 + 多台 Asio TCP 聊天服 + Redis/MySQL，支持私聊群聊、大文件流式上传、断线重连等。</p>
+                    <div class="tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">Qt 6</span>
+                        <span class="tag">Boost.Asio</span>
+                        <span class="tag">gRPC</span>
+                        <span class="tag">Redis</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/Stan-Vincent/HChat-demo" target="_blank" rel="noopener">查看源码 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 技能栈 ============ -->
+    <section id="skills">
+        <h2 class="section-title reveal">技能栈</h2>
+        <p class="section-subtitle reveal">日常开发中使用的技术</p>
+
+        <div class="skills-wrap">
+            <div class="glass skill-group reveal">
+                <h3>编程语言</h3>
+                <div class="skill-chips">
+                    <span class="chip">C++</span>
+                    <span class="chip">Python</span>
+                    <span class="chip">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="glass skill-group reveal">
+                <h3>框架与库</h3>
+                <div class="skill-chips">
+                    <span class="chip">Qt 6</span>
+                    <span class="chip">Boost.Asio</span>
+                    <span class="chip">Boost.Beast</span>
+                    <span class="chip">gRPC</span>
+                </div>
+            </div>
+
+            <div class="glass skill-group reveal">
+                <h3>存储与中间件</h3>
+                <div class="skill-chips">
+                    <span class="chip">Redis</span>
+                    <span class="chip">MySQL</span>
+                </div>
+            </div>
+
+            <div class="glass skill-group reveal">
+                <h3>工具与环境</h3>
+                <div class="skill-chips">
+                    <span class="chip">Git</span>
+                    <span class="chip">CMake</span>
+                    <span class="chip">Linux</span>
+                    <span class="chip">Visual Studio</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 联系 ============ -->
+    <section id="contact">
+        <div class="glass contact-card reveal">
+            <h2 class="section-title">联系我</h2>
+            <p>对 C++ / Qt / 分布式系统感兴趣，欢迎来 GitHub 逛逛，<br>一起交流技术、共同进步。</p>
+            <div class="links">
+                <a href="https://github.com/Stan-Vincent" class="btn" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Stan-Vincent · 使用 GitHub Pages 构建
+    </footer>
+
+    <script>
+        // 滚动显现动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
