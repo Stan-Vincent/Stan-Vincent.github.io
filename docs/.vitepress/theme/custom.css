@@ -47,7 +47,7 @@
   --vp-sidebar-bg-color: var(--bg);
   --vp-sidebar-width: 240px;
   --vp-code-block-bg: var(--code-bg);
-  --vp-code-color: var(--code-fg);
+  --vp-code-color: var(--ink);
   --vp-button-brand-bg: var(--ink);
   --vp-button-brand-text: var(--bg);
   --vp-button-brand-hover-bg: var(--ink);
@@ -99,7 +99,7 @@ html.dark {
   --vp-nav-bg-color: var(--header-bg);
   --vp-sidebar-bg-color: var(--bg);
   --vp-code-block-bg: var(--code-bg);
-  --vp-code-color: var(--code-fg);
+  --vp-code-color: var(--ink);
   --vp-button-brand-bg: var(--ink);
   --vp-button-brand-text: var(--bg);
   --vp-button-brand-hover-bg: var(--ink);
@@ -427,6 +427,27 @@ body {
 /* ============ 文章列表 ============ */
 .post-list {
   border-top: 1px solid var(--line);
+}
+
+.empty-state {
+  margin: 0;
+  padding: 28px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--mute);
+}
+
+.empty-state code {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-family: var(--mono);
+  font-size: 0.85em;
+  color: var(--ink);
 }
 
 .post-row {
@@ -868,6 +889,13 @@ body {
   font-family: var(--mono);
   font-size: 0.86em;
   color: var(--ink);
+}
+
+/* 行内代码跟正文同色，避免浅色模式下变成浅灰 */
+.vp-doc :not(pre) > code {
+  color: var(--ink);
+  background-color: var(--surface-2);
+  border: 1px solid var(--line);
 }
 
 .vp-doc div[class*='language-'] {

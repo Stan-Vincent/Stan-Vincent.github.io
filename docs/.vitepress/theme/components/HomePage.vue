@@ -43,7 +43,7 @@ const latestPosts = posts.slice(0, 3)
           <a class="note note-link" href="/blog/">全部文章 →</a>
         </div>
 
-        <div class="post-list">
+        <div v-if="latestPosts.length" class="post-list">
           <a
             v-for="post in latestPosts"
             :key="post.url"
@@ -61,6 +61,7 @@ const latestPosts = posts.slice(0, 3)
             <span class="post-arrow" aria-hidden="true">→</span>
           </a>
         </div>
+        <p v-else class="empty-state">还没有文章。在 <code>docs/blog/posts/</code> 新建 Markdown 文件，然后运行 <code>npm run build:site</code>。</p>
       </section>
 
       <section id="projects" class="section">

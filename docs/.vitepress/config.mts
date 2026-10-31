@@ -25,10 +25,12 @@ function readPosts() {
 }
 
 function blogSidebar() {
+  const posts = readPosts()
+  if (!posts.length) return []
   return [
     {
       text: '全部文章',
-      items: readPosts().map(({ text, link }) => ({ text, link }))
+      items: posts.map(({ text, link }) => ({ text, link }))
     }
   ]
 }

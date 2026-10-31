@@ -24,7 +24,7 @@ const monthText = posts.length
       </section>
 
       <section class="blog-index">
-        <div class="post-list">
+        <div v-if="posts.length" class="post-list">
           <a
             v-for="post in posts"
             :key="post.url"
@@ -42,6 +42,7 @@ const monthText = posts.length
             <span class="post-arrow" aria-hidden="true">→</span>
           </a>
         </div>
+        <p v-else class="empty-state">还没有文章。在 <code>docs/blog/posts/</code> 新建 Markdown 文件，然后运行 <code>npm run build:site</code>。</p>
       </section>
     </main>
   </div>
